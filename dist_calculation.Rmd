@@ -1,0 +1,38 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+Calculating Geospatial distance using lattitude and longitude measurements
+
+```{r}
+install.packages("geosphere")
+```
+
+```{r}
+set.seed(1234)
+library(geosphere)
+mydata <- read.csv("PPR.csv")
+
+df <- mydata[c(14,15)]
+head(df)
+```
+```{r}
+long <- c(52.070498, 52.370216, 52.632381, 53.201233, 51.813298, 51.92442, 52.266075, 53.219383, 52.960561, 52.367027, 51.571915, 52.516775, 51.441642, 52.221537, 52.090737, 51.985103, 51.560596)
+lat <- c(4.3007, 4.895168,4.753375, 5.799913, 4.690093, 4.477733, 6.155217, 6.566502, 5.920522, 6.668492, 4.768323, 6.083022, 5.469722, 6.893662, 5.12142, 5.89873, 5.091914)
+
+stad <- c("Den Haag", "Amsterdam", "Alkmaar", "Leeuwarden", "Dordrecht", "Rotterdam", "Deventer", "Groningen", "Heerenveen", "Almelo", "Breda", "Zwolle", "Eindhoven", "Enschede", "Utrecht", "Arnhem", "Tilburg")
+list1 <- data.frame(longitude=long, latitude=lat, stad)
+
+long <- c(51.476364, 52.12379, 52.456954, 51.543197, 52.307687, 53.250184, 52.640436, 53.397875, 52.491691, 52.109272, 52.121092, 52.882946, 52.518537, 53.201233, 52.711559, 52.066719, 53.405366, 52.433881, 53.128855, 51.641078, 53.189226, 52.716927, 51.453667, 51.233528, 51.529207, 51.980632, 51.429248, 51.92442, 51.441642, 50.851368)
+lat <- c(6.180948, 4.438598, 4.606014, 6.087664, 4.767424, 4.951427, 4.998517, 5.346679, 4.593325, 5.180968, 5.285347, 5.360707, 5.471422, 5.799913, 5.864559, 5.894033, 6.212048, 6.232888, 6.587567, 5.619458, 7.162511, 5.737644, 3.570912, 3.830322, 3.89688, 4.134185, 4.304708, 4.477733, 5.469722, 5.690973)
+stad <- c("Valkenburg", "Voorschoten", "Ijmuiden", "De kooy", "Schiphol", "Vlieland", "Berkhout", "Hoorn (terschelling)", "Wijk aan zee", "De Bilt", "Soesterberg", "Stavoren", "Lelystad", "Leeuwarden", "Marknesse", "Deelen", "Lauwersoog", "Heino", "Eelde", "Hupsel", "Nieuwe beerta", "Twente", "Vlissingen", "Westdorpe", "Wilhelminadorp", "Hoek van Holland", "Woensdrecht", "Rotterdam", "Eindhoven", "Maastricht")
+list2 <- data.frame(longitude=long, latitude=lat , stad)
+
+#list2$lat2 <- as.numeric(levels(df$Latitude))[df$Latitude]
+#list2$long2 <- as.numeric(levels(df$Longitude))[df$Longitude]
+
+
+distm(list1[,c('longitude','latitude')], list2[,c('longitude','latitude')], fun = distHaversine)
+```
+
