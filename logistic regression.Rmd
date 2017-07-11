@@ -1,0 +1,24 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+Logistic Regression on residential mortgage data
+
+```{r}
+idata <- read.csv('Residential Mortgages.csv',header=T,na.strings=c(""),nrows = 1000)
+head(idata)
+
+```
+```{r}
+sapply(idata,function(x) sum(is.na(x)))
+```
+```{r}
+input <- idata[c(2:35)]
+input[] <- lapply(input, function(x) {
+    if(is.factor(x)) as.numeric(as.character(x)) else x})
+```
+```{r}
+
+```
+
