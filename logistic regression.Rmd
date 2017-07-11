@@ -15,10 +15,29 @@ sapply(idata,function(x) sum(is.na(x)))
 ```
 ```{r}
 input <- idata[c(2:35)]
-input[] <- lapply(input, function(x) {
-    if(is.factor(x)) as.numeric(as.character(x)) else x})
+#input[] <- lapply(input, function(x) {
+#    if(is.factor(x)) as.numeric(as.character(x)) else x})
 ```
 ```{r}
+install.packages("Amelia")
+```
+```{r}
+library(Amelia)
+missmap(input, main = "Missing values vs observed")
+```
+```{r}
+dat <- subset(input,select = c(8,9,10,13,14,19,20,25,26,28,29))
 
+dat$DefaultedLoans <- ifelse(dat$DefaultedLoans == "Yes",0,1)
+#data[,'DefaultedLoans'] <- as.numeric(data[,'DefaultedLoans'])
+head(dat)
+
+```
+
+```{r}
+train <- dat[1:800,]
+test <- dat[801:1000,]
+
+model <- glm(DefaultedLoans~.,family = binomial(link = 'logit'),data=train)
 ```
 
