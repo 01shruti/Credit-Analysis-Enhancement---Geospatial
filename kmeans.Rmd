@@ -1,0 +1,12 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+set.seed(123)
+
+i <- read.csv('Residential Mortgages.csv',header=T,na.strings=c(""),nrows = 1000)
+head(i)
+```
