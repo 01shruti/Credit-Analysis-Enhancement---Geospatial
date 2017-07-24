@@ -1,0 +1,56 @@
+---
+title: "Exploratory Analysis of Credit loan dataset"
+output: html_notebook
+---
+
+#Reading the csv file 
+
+```{r}
+set.seed(2345)
+
+loan_data <- read.csv("Residential Mortgages.csv")
+
+summary(loan_data)
+```
+#Check for missing and unknown values
+
+```{r}
+library(caret)
+apply(loan_data, 2, function(x) sum(is.na(x)==TRUE))
+
+```
+
+
+#CrossTable data
+
+```{r}
+library(gmodels)
+
+print("----------------------------------------------------------------")
+print("                  Cross Table of Defaulted Loans")
+print("----------------------------------------------------------------")
+
+CrossTable(loan_data$DefaultedLoans)
+
+print("----------------------------------------------------------------")
+print("           Cross Table of Defaulted Loans and Credit Rating")
+print("----------------------------------------------------------------")
+
+CrossTable(loan_data$CreditRating, loan_data$DefaultedLoans, prop.r = TRUE, prop.c = FALSE, prop.t = FALSE, prop.chisq = FALSE)
+```
+
+#Plots to explore data
+
+```{r}
+qplot(InterestRate, colour=DefaultedLoans, data = loan_data, geom = "density")
+qplot(InterestType, colour=DefaultedLoans, data = loan_data, geom = "density")
+qplot(CreditRating, colour=DefaultedLoans, data = loan_data, geom = "density")
+qplot(MortgageType, colour=DefaultedLoans, data = loan_data, geom = "density")
+qplot(LTV, colour=DefaultedLoans, data = loan_data, geom = "density")
+qplot(MortgageYears, colour=DefaultedLoans, data = loan_data, geom = "density")
+qplot(ValuationAgeYears, colour=DefaultedLoans, data = loan_data, geom = "density")
+qplot(County, colour=DefaultedLoans, data = loan_data, geom = "density")
+
+
+```
+
