@@ -42,6 +42,7 @@ CrossTable(loan_data$CreditRating, loan_data$DefaultedLoans, prop.r = TRUE, prop
 #Plots to explore data
 
 ```{r}
+library(ggplot2)
 qplot(InterestRate, colour=DefaultedLoans, data = loan_data, geom = "density")
 qplot(InterestType, colour=DefaultedLoans, data = loan_data, geom = "density")
 qplot(CreditRating, colour=DefaultedLoans, data = loan_data, geom = "density")
@@ -49,8 +50,6 @@ qplot(MortgageType, colour=DefaultedLoans, data = loan_data, geom = "density")
 qplot(LTV, colour=DefaultedLoans, data = loan_data, geom = "density")
 qplot(MortgageYears, colour=DefaultedLoans, data = loan_data, geom = "density")
 qplot(ValuationAgeYears, colour=DefaultedLoans, data = loan_data, geom = "density")
-qplot(County, colour=DefaultedLoans, data = loan_data, geom = "density")
-
 
 ```
 
