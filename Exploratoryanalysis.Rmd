@@ -53,3 +53,25 @@ qplot(ValuationAgeYears, colour=DefaultedLoans, data = loan_data, geom = "densit
 
 ```
 
+#Spotting outliers
+
+```{r}
+
+hist_1 <- hist(as.numeric(loan_data$LoanBalance))
+hist_1$breaks
+
+hist_2 <- hist(as.numeric(loan_data$LoanBalance), breaks = 200, xlab = "Loan Balance Amount", 
+               main = "Histogram of the loan balance amount")
+
+#Plot outliers
+plot(loan_data$ValuationAgeYears, ylab = "Valuation Age Years")
+plot(loan_data$CreditRating, ylab = "Credit Rating")
+plot(loan_data$InterestType, ylab = "Interest Type")
+plot(loan_data$InterestRate, ylab = "Interest Rate")
+plot(loan_data$LTV, ylab = "Loan to Value")
+plot(loan_data$MortgageYears, ylab = "Mortgage Years")
+plot(loan_data$County, ylab = "County")
+plot(loan_data$InArrears, ylab = "In Arrears")
+
+```
+
