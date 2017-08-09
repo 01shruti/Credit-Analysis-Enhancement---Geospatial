@@ -4,23 +4,59 @@ output: html_notebook
 ---
 
 ```{r}
-RM <- read.csv("Residential Mortgages.csv",header=TRUE)
+RM <- read.csv("finalData.csv",header=TRUE,sep = ";")
 head(RM)
-names(RM)
+str(RM)
 ```
 
 ```{r}
 library(lattice)
 par(mfrow = c(2,2))
-df <- unique(RM[c(2:6,9:16,20,22,26:31)]) 
+df <- unique(RM[c(6,8:17)])
+df$DefaultedLoans <- as.numeric(df$DefaultedLoans)
 head(df)
 ```
 ```{r}
-var_list<- names(df)[1:5,7:21]
+var_list<- names(df)[2:11]
 models <- lapply(var_list, 
           function(x) 
             {
              mod = lm(substitute(DefaultedLoans ~ i, list(i = as.name(x))), data = df)
             })
+par(mfrow = c(2,2))
+invisible(lapply(models,plot))
+```
+
+```{r}
+library(ggplot2)
+plots <- function(i){
+                     ggplot(df, aes(x = df[i])) + 
+                     geom_histogram(aes(y = ..density..),colour = "black", 
+                                    fill = "yellow",binwidth = 0.02) +
+                     geom_density(alpha = 0.2, fill = "blue",linetype = "dashed") + 
+                     geom_vline(aes(xintercept=mean(df[i], na.rm = TRUE)),
+                                color = "black",linetype = "dashed", size = 1) +
+                     xlab(names(df)[i]) +
+                     ggtitle(paste("Histogram plot of ",names(df)[i]))}
+par(mfrow = c(2,2))
+lapply(2:11,FUN = plots)
+```
+```{r}
+library(s20x)
+pairs(df,col="green",pch = 20)
+pairs20x(df)
+```
+```{r}
+library(stargazer)
+library(doBy)
+stargazer(df, type = "text", median = TRUE, digits = 2)
+summaryBy(AddressLatitude ~ DefaultedLoans, data = RM, FUN = c(mean), na.rm =TRUE)
+summaryBy(AddressLongitude ~ DefaultedLoans, data = RM, FUN = c(mean), na.rm =TRUE)
+summaryBy(CreditRating ~ DefaultedLoans, data = RM, FUN = c(mean), na.rm =TRUE)
+summaryBy(CreditRating ~ County, data = RM, FUN = c(mean), na.rm =TRUE)
+```
+```{r}
+reg <- lm(df$DefaultedLoans~df$CreditRating+df$MortgageYears+df$CreditRatingMovement+df$LTV+df$LoanBalance+df$InterestIncome+df$PropertyValue+df$AnnualPYMT+df$AddressLatitude+df$AddressLongitude)
+summary(reg)
 ```
 
