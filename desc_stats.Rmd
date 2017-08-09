@@ -1,0 +1,26 @@
+---
+title: "Descriptive statistics"
+output: html_notebook
+---
+
+```{r}
+RM <- read.csv("Residential Mortgages.csv",header=TRUE)
+head(RM)
+names(RM)
+```
+
+```{r}
+library(lattice)
+par(mfrow = c(2,2))
+df <- unique(RM[c(2:6,9:16,20,22,26:31)]) 
+head(df)
+```
+```{r}
+var_list<- names(df)[1:5,7:21]
+models <- lapply(var_list, 
+          function(x) 
+            {
+             mod = lm(substitute(DefaultedLoans ~ i, list(i = as.name(x))), data = df)
+            })
+```
+
