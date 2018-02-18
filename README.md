@@ -1,2 +1,4 @@
 # Credit-Analysis-Enhancement---Geospatial
 This project will explain how to enhance credit analysis (A problem which all banks and financial institutions deal with). Added advantage is to use Geospatial techniques to understand customer behavior based on the locality he/she is living in. 
+The predictive model is built on logistic regression and decision tree algorithms and produces an estimated default probability of the applicant. Models are built on normalised data to cover all possible scenarios from real life. 
+The predictive probability will determine good and bad customers by classifying them into four categories. The output from predictive models is used on tableau to generate business dashboard. Models ability to classify and performance measurements were measured by using statistical metrics: Gini, KS and AUROC.
